@@ -15,9 +15,9 @@
 #
 
 #
-# Base on the standard Maven 3.5.3 image
+# Base on the standard Maven image
 #
-FROM maven:3.5.3-jdk-8
+FROM maven:3.8.4-jdk-11
 
 #
 # Install Node.js (which includes npm)
@@ -50,16 +50,3 @@ RUN apt install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 
 # Install Docker for Loki visual regression testing and dependencies required for Nx and build tooling
 #
 RUN apt install -y docker-ce docker-ce-cli containerd.io build-essential
-
-#
-# Install Chrome (Required for automated tests)
-#
-# Note: Google has phased out fetching a specific version of Chrome, which is why we're fetching from a mirror:
-# https://stackoverflow.com/questions/70752674/404-on-dl-google-com-for-stable-chrome
-RUN wget http://mirror.cs.uchicago.edu/google-chrome/pool/main/g/google-chrome-stable/google-chrome-stable_83.0.4103.97-1_amd64.deb
-RUN dpkg -i google-chrome-stable_83.0.4103.97-1_amd64.deb; apt-get -fy install
-
-#
-# Fetch chromedriver to save a download on every build
-#
-RUN curl https://chromedriver.storage.googleapis.com/83.0.4103.39/chromedriver_linux64.zip --create-dirs -o /tmp/chromedriver_linux64.zip
